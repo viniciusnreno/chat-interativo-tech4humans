@@ -70,3 +70,13 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* scrollbar  */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-secondary;
+  border-radius: 5px;
+  height: 100px;
+}

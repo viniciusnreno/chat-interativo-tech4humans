@@ -72,7 +72,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onChatSelect }) => {
         >
           Novo Chat
         </Button>
-        <div className="space-y-2">
+        <div className="max-h-[calc(100vh-10rem)] space-y-2 overflow-y-auto">
           {Object.keys(chats).map((chatId) => (
             <div
               key={chatId}
@@ -83,7 +83,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onChatSelect }) => {
               </span>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Ellipsis />
+                  <Ellipsis className="me-2" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuItem onClick={() => setSelectedChatId(chatId)}>
