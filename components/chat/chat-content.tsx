@@ -13,7 +13,7 @@ const ChatContent = ({ messages }: { messages: Message[] }) => {
           <div
             className={`my-1 rounded-md p-2 ${
               message.sender === "user"
-                ? "self-end bg-blue-500 text-white"
+                ? "self-end bg-blue-600 text-white"
                 : "self-start bg-white text-gray-800"
             }`}
           >

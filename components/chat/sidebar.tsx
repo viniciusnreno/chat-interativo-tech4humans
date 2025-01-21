@@ -1,9 +1,13 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getChats, saveChats } from "@/utils/localStorage";
-import { Message } from "@/types/chat";
+import {
+  getChats,
+  saveChats,
+  removeChat,
+  updateChat,
+} from "@/utils/localStorage";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,24 +15,28 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Pencil, Trash } from "lucide-react";
+import EditChatDialog from "@/components/chat/edit-dialog";
+import { Message } from "@/types/chat";
 
 interface SidebarProps {
   onChatSelect: (chatId: string) => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ onChatSelect }) => {
-  const [chats, setChats] = React.useState<{ [key: string]: Message[] }>({});
+  const [chats, setChats] = useState<{ [key: string]: Message[] }>({});
+  const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
 
+  //carrega os chats salvos no local storage
   React.useEffect(() => {
     const savedChats = getChats();
     setChats(savedChats);
   }, []);
 
-  const handleNewChat = () => {
-    const date = new Date();
-    const formattedDate = date.toLocaleString("pt-BR", {
+  //cria um novo chat
+  const handleCreateChat = () => {
+    const formattedDate = new Date().toLocaleString("pt-BR", {
       dateStyle: "short",
-      timeStyle: "short",
+      timeStyle: "medium",
     });
     const newChatId = `Chat - ${formattedDate}`;
     const newChats = { ...chats, [newChatId]: [] };
@@ -37,13 +45,31 @@ const Sidebar: React.FC<SidebarProps> = ({ onChatSelect }) => {
     onChatSelect(newChatId);
   };
 
+  const handleRemoveChat = (chatId: string) => {
+    removeChat(chatId);
+    const updatedChats = { ...chats };
+    delete updatedChats[chatId];
+    setChats(updatedChats);
+  };
+
+  const handleEditChat = (oldChatId: string, newChatId: string) => {
+    updateChat(oldChatId, newChatId);
+    const updatedChats = getChats();
+    setChats(updatedChats);
+    onChatSelect(newChatId);
+  };
+
   return (
-    <Card className="h-screen w-64 bg-gray-900 text-white">
+    <Card className="h-screen w-64 bg-primary text-primary-foreground transition-colors">
       <CardHeader>
         <CardTitle className="text-lg">Chats</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <Button variant="secondary" className="w-full" onClick={handleNewChat}>
+        <Button
+          variant="secondary"
+          className="w-full"
+          onClick={handleCreateChat}
+        >
           Novo Chat
         </Button>
         <div className="space-y-2">
@@ -51,12 +77,8 @@ const Sidebar: React.FC<SidebarProps> = ({ onChatSelect }) => {
             <div
               key={chatId}
               className="flex cursor-pointer items-center justify-between rounded-md p-2 hover:bg-gray-700"
-              onClick={() => onChatSelect(chatId)}
             >
-              <span
-                className="flex-grow cursor-pointer"
-                onClick={() => onChatSelect(chatId)}
-              >
+              <span className="flex-grow" onClick={() => onChatSelect(chatId)}>
                 {chatId}
               </span>
               <DropdownMenu>
@@ -66,11 +88,13 @@ const Sidebar: React.FC<SidebarProps> = ({ onChatSelect }) => {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setSelectedChatId(chatId)}>
                     <Pencil />
+                    Renomear
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleRemoveChat(chatId)}>
                     <Trash className="text-red-500" />
+                    Remover
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -78,6 +102,13 @@ const Sidebar: React.FC<SidebarProps> = ({ onChatSelect }) => {
           ))}
         </div>
       </CardContent>
+      {selectedChatId && (
+        <EditChatDialog
+          chatId={selectedChatId}
+          onClose={() => setSelectedChatId(null)}
+          onSave={handleEditChat}
+        />
+      )}
     </Card>
   );
 };

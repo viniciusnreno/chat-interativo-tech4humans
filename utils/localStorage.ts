@@ -30,3 +30,21 @@ export function getMessages(chatId: string): Message[] {
   }
   return [];
 }
+export function removeChat(chatId: string) {
+  if (isBrowser) {
+    const chats = getChats();
+    delete chats[chatId];
+    saveChats(chats);
+  }
+}
+
+export function updateChat(oldChatId: string, newChatId: string) {
+  if (isBrowser) {
+    const chats = getChats();
+    if (chats[oldChatId]) {
+      chats[newChatId] = chats[oldChatId];
+      delete chats[oldChatId];
+      saveChats(chats);
+    }
+  }
+}
