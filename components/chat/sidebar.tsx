@@ -8,15 +8,9 @@ import {
   removeChat,
   updateChat,
 } from "@/utils/localStorage";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Ellipsis, Pencil, Trash } from "lucide-react";
 import EditChatDialog from "@/components/chat/edit-dialog";
 import { Message } from "@/types/chat";
+import ChatItem from "@/components/chat/chat-item";
 
 interface SidebarProps {
   onChatSelect: (chatId: string) => void;
@@ -39,7 +33,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onChatSelect }) => {
       timeStyle: "medium",
     });
     const newChatId = `Chat - ${formattedDate}`;
-    const newChats = { ...chats, [newChatId]: [] };
+    const newChats = { [newChatId]: [], ...chats };
     setChats(newChats);
     saveChats(newChats);
     onChatSelect(newChatId);
@@ -60,7 +54,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onChatSelect }) => {
   };
 
   return (
-    <Card className="h-screen w-64 bg-primary text-primary-foreground transition-colors">
+    <Card className="h-screen w-72 bg-primary text-primary-foreground transition-colors">
       <CardHeader>
         <CardTitle className="text-lg">Chats</CardTitle>
       </CardHeader>
@@ -74,29 +68,13 @@ const Sidebar: React.FC<SidebarProps> = ({ onChatSelect }) => {
         </Button>
         <div className="max-h-[calc(100vh-10rem)] space-y-2 overflow-y-auto">
           {Object.keys(chats).map((chatId) => (
-            <div
+            <ChatItem
               key={chatId}
-              className="flex cursor-pointer items-center justify-between rounded-md p-2 hover:bg-gray-700"
-            >
-              <span className="flex-grow" onClick={() => onChatSelect(chatId)}>
-                {chatId}
-              </span>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Ellipsis className="me-2" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem onClick={() => setSelectedChatId(chatId)}>
-                    <Pencil />
-                    Renomear
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => handleRemoveChat(chatId)}>
-                    <Trash className="text-red-500" />
-                    Remover
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
+              chatId={chatId}
+              onSelect={onChatSelect}
+              onEdit={() => setSelectedChatId(chatId)}
+              onRemove={handleRemoveChat}
+            />
           ))}
         </div>
       </CardContent>
