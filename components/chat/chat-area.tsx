@@ -1,11 +1,18 @@
-import ChatForm from "./chat-form";
-
+"use client";
+import React, { useEffect } from "react";
+import { getMessages } from "@/utils/localStorage";
+import ChatContent from "@/components/chat/chat-content";
+import ChatForm from "@/components/chat/chat-form";
+import { Message } from "@/types/chat";
 const ChatArea = () => {
+  const [messages, setMessages] = React.useState<Message[]>([]);
+  useEffect(() => {
+    setMessages(getMessages("chatMessages"));
+  }, [messages]);
+
   return (
     <div className="flex h-screen flex-col bg-gray-100">
-      <div className="flex-1 overflow-y-auto p-4">
-        <div className="mb-2">teste</div>
-      </div>
+      <ChatContent messages={messages} />
       <ChatForm />
     </div>
   );

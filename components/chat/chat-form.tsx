@@ -1,12 +1,12 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Message } from "@/types/chat";
-import { setData } from "@/utils/localStorage";
+import { saveMessage } from "@/utils/localStorage";
 
 const ChatForm = () => {
-  const [input, setInput] = React.useState("");
+  const [input, setInput] = useState("");
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,8 +18,7 @@ const ChatForm = () => {
       timestamp: new Date().toISOString(),
     };
 
-    setData("chatMessages", newMessage);
-
+    saveMessage("chatMessages", newMessage);
     setInput("");
   };
 
