@@ -15,19 +15,18 @@ export function getChats(): { [key: string]: Message[] } {
 }
 
 export function saveMessage(chatId: string, value: Message) {
-  if (typeof window !== "undefined") {
-    const existingMessages = getMessages(chatId);
-    window.localStorage.setItem(
-      chatId,
-      JSON.stringify([...existingMessages, value])
-    );
+  if (isBrowser) {
+    const chats = getChats();
+    const updatedChat = [...(chats[chatId] || []), value];
+    chats[chatId] = updatedChat;
+    saveChats(chats);
   }
 }
 
 export function getMessages(chatId: string): Message[] {
-  if (typeof window !== "undefined") {
-    const data = window.localStorage.getItem(chatId);
-    return data ? JSON.parse(data) : [];
+  if (isBrowser) {
+    const chats = getChats();
+    return chats[chatId] || [];
   }
   return [];
 }

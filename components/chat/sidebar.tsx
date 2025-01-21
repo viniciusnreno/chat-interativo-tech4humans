@@ -18,7 +18,12 @@ const Sidebar: React.FC<SidebarProps> = ({ onChatSelect }) => {
   }, []);
 
   const handleNewChat = () => {
-    const newChatId = `chat-${Date.now()}`;
+    const date = new Date();
+    const formattedDate = date.toLocaleString("pt-BR", {
+      dateStyle: "short",
+      timeStyle: "short",
+    });
+    const newChatId = `Chat - ${formattedDate}`;
     const newChats = { ...chats, [newChatId]: [] };
     setChats(newChats);
     saveChats(newChats);
