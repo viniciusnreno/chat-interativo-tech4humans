@@ -23,7 +23,7 @@ const ChatArea: React.FC<ChatAreaProps> = ({ chatId }) => {
   };
 
   return (
-    <div className="flex h-screen flex-col bg-gray-100">
+    <div className="flex h-screen flex-1 flex-col bg-gray-100">
       <ChatContent messages={messages} />
       <ChatForm onSendMessage={handleSendMessage} />
     </div>

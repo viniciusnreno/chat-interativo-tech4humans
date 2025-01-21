@@ -4,6 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getChats, saveChats } from "@/utils/localStorage";
 import { Message } from "@/types/chat";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Pencil, Trash } from "lucide-react";
 
 interface SidebarProps {
   onChatSelect: (chatId: string) => void;
@@ -46,7 +53,27 @@ const Sidebar: React.FC<SidebarProps> = ({ onChatSelect }) => {
               className="flex cursor-pointer items-center justify-between rounded-md p-2 hover:bg-gray-700"
               onClick={() => onChatSelect(chatId)}
             >
-              <span>{chatId}</span>
+              <span
+                className="flex-grow cursor-pointer"
+                onClick={() => onChatSelect(chatId)}
+              >
+                {chatId}
+              </span>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm" className="text-white">
+                    ...
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem>
+                    <Pencil />
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Trash className="text-red-500" />
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           ))}
         </div>
