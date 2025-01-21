@@ -5,16 +5,20 @@ import ChatContent from "@/components/chat/chat-content";
 import ChatForm from "@/components/chat/chat-form";
 import { Message } from "@/types/chat";
 
-const ChatArea = () => {
+interface ChatAreaProps {
+  chatId: string;
+}
+
+const ChatArea: React.FC<ChatAreaProps> = ({ chatId }) => {
   const [messages, setMessages] = React.useState<Message[]>([]);
 
   React.useEffect(() => {
-    const storedMessages = getMessages("chatMessages");
+    const storedMessages = getMessages(chatId);
     setMessages(storedMessages || []);
-  }, []);
+  }, [chatId]);
 
   const handleSendMessage = (newMessage: Message) => {
-    saveMessage("chatMessages", newMessage);
+    saveMessage(chatId, newMessage);
     setMessages((prevMessages) => [...prevMessages, newMessage]);
   };
 
