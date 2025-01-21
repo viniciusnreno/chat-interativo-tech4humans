@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Ellipsis, Pencil, Trash } from "lucide-react";
 
 interface ChatItemProps {
+  chatName: string;
   chatId: string;
   onSelect: (chatId: string) => void;
   onEdit: (chatId: string) => void;
@@ -17,17 +18,15 @@ interface ChatItemProps {
 
 const ChatItem: React.FC<ChatItemProps> = ({
   chatId,
+  chatName,
   onSelect,
   onEdit,
   onRemove,
 }) => {
   return (
-    <div
-      key={chatId}
-      className="flex cursor-pointer items-center justify-between rounded-md p-2 hover:bg-gray-700"
-    >
+    <div className="flex cursor-pointer items-center justify-between rounded-md p-2 hover:bg-gray-700">
       <span className="flex-grow" onClick={() => onSelect(chatId)}>
-        {chatId}
+        {chatName}
       </span>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

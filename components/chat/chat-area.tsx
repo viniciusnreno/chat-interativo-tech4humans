@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { getMessages, saveMessage } from "@/utils/localStorage";
+import { getMessages, setMessage } from "@/utils/chatService";
 import ChatContent from "@/components/chat/chat-content";
 import ChatForm from "@/components/chat/chat-form";
 import { Message } from "@/types/chat";
@@ -18,7 +18,7 @@ const ChatArea: React.FC<ChatAreaProps> = ({ chatId }) => {
   }, [chatId]);
 
   const handleSendMessage = (newMessage: Message) => {
-    saveMessage(chatId, newMessage);
+    setMessage(chatId, newMessage);
     setMessages((prevMessages) => [...prevMessages, newMessage]);
   };
 

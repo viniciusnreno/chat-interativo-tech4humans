@@ -1,15 +1,14 @@
-"use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  getChats,
-  saveChats,
+  createChat,
+  getData,
   removeChat,
   updateChat,
-} from "@/utils/localStorage";
+} from "@/utils/chatService";
 import EditChatDialog from "@/components/chat/edit-dialog";
-import { Message } from "@/types/chat";
+import { Chat } from "@/types/chat";
 import ChatItem from "@/components/chat/chat-item";
 
 interface SidebarProps {
@@ -17,40 +16,32 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ onChatSelect }) => {
-  const [chats, setChats] = useState<{ [key: string]: Message[] }>({});
+  const [chats, setChats] = useState<Chat[]>([]);
   const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
 
-  //carrega os chats salvos no local storage
-  React.useEffect(() => {
-    const savedChats = getChats();
+  useEffect(() => {
+    const savedChats = getData();
     setChats(savedChats);
   }, []);
 
-  //cria um novo chat
   const handleCreateChat = () => {
-    const formattedDate = new Date().toLocaleString("pt-BR", {
-      dateStyle: "short",
-      timeStyle: "medium",
-    });
-    const newChatId = `Chat - ${formattedDate}`;
-    const newChats = { [newChatId]: [], ...chats };
-    setChats(newChats);
-    saveChats(newChats);
-    onChatSelect(newChatId);
+    const newChat = createChat();
+    setChats((prevChats) => [...prevChats, newChat]);
+    onChatSelect(newChat.id);
   };
 
   const handleRemoveChat = (chatId: string) => {
     removeChat(chatId);
-    const updatedChats = { ...chats };
-    delete updatedChats[chatId];
-    setChats(updatedChats);
+    setChats((prevChats) => prevChats.filter((chat) => chat.id !== chatId));
   };
 
-  const handleEditChat = (oldChatId: string, newChatId: string) => {
-    updateChat(oldChatId, newChatId);
-    const updatedChats = getChats();
-    setChats(updatedChats);
-    onChatSelect(newChatId);
+  const handleEditChat = (chatId: string, newName: string) => {
+    updateChat(chatId, newName);
+    setChats((prevChats) =>
+      prevChats.map((chat) =>
+        chat.id === chatId ? { ...chat, name: newName } : chat
+      )
+    );
   };
 
   return (
@@ -67,13 +58,14 @@ const Sidebar: React.FC<SidebarProps> = ({ onChatSelect }) => {
           Novo Chat
         </Button>
         <div className="max-h-[calc(100vh-10rem)] space-y-2 overflow-y-auto">
-          {Object.keys(chats).map((chatId) => (
+          {chats.map((chat) => (
             <ChatItem
-              key={chatId}
-              chatId={chatId}
+              key={chat.id}
+              chatId={chat.id}
+              chatName={chat.name}
               onSelect={onChatSelect}
-              onEdit={() => setSelectedChatId(chatId)}
-              onRemove={handleRemoveChat}
+              onEdit={() => setSelectedChatId(chat.id)}
+              onRemove={() => handleRemoveChat(chat.id)}
             />
           ))}
         </div>
