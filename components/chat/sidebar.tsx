@@ -14,7 +14,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Pencil, Trash } from "lucide-react";
+import { Ellipsis, Pencil, Trash } from "lucide-react";
 import EditChatDialog from "@/components/chat/edit-dialog";
 import { Message } from "@/types/chat";
 
@@ -83,9 +83,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onChatSelect }) => {
               </span>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm" className="text-white">
-                    ...
-                  </Button>
+                  <Ellipsis />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuItem onClick={() => setSelectedChatId(chatId)}>
