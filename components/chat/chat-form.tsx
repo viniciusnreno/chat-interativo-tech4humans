@@ -3,9 +3,12 @@ import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Message } from "@/types/chat";
-import { saveMessage } from "@/utils/localStorage";
 
-const ChatForm = () => {
+const ChatForm = ({
+  onSendMessage,
+}: {
+  onSendMessage: (message: Message) => void;
+}) => {
   const [input, setInput] = useState("");
 
   const handleSendMessage = (e: React.FormEvent) => {
@@ -18,7 +21,7 @@ const ChatForm = () => {
       timestamp: new Date().toISOString(),
     };
 
-    saveMessage("chatMessages", newMessage);
+    onSendMessage(newMessage);
     setInput("");
   };
 
@@ -36,5 +39,4 @@ const ChatForm = () => {
     </form>
   );
 };
-
 export default ChatForm;

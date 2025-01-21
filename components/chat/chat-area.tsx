@@ -1,19 +1,27 @@
 "use client";
-import React, { useEffect } from "react";
-import { getMessages } from "@/utils/localStorage";
+import React from "react";
+import { getMessages, saveMessage } from "@/utils/localStorage";
 import ChatContent from "@/components/chat/chat-content";
 import ChatForm from "@/components/chat/chat-form";
 import { Message } from "@/types/chat";
+
 const ChatArea = () => {
   const [messages, setMessages] = React.useState<Message[]>([]);
-  useEffect(() => {
-    setMessages(getMessages("chatMessages"));
-  }, [messages]);
+
+  React.useEffect(() => {
+    const storedMessages = getMessages("chatMessages");
+    setMessages(storedMessages || []);
+  }, []);
+
+  const handleSendMessage = (newMessage: Message) => {
+    saveMessage("chatMessages", newMessage);
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+  };
 
   return (
     <div className="flex h-screen flex-col bg-gray-100">
       <ChatContent messages={messages} />
-      <ChatForm />
+      <ChatForm onSendMessage={handleSendMessage} />
     </div>
   );
 };

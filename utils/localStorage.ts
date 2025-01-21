@@ -1,15 +1,18 @@
 import { Message } from "@/types/chat";
 
-// Função para salvar mensagens no localStorage
+const isBrowser = typeof window !== "undefined";
+
 export function saveMessage(key: string, value: Message) {
-  window.localStorage.setItem(
-    key,
-    JSON.stringify([...getMessages(key), value])
-  );
+  if (isBrowser) {
+    window.localStorage.setItem(
+      key,
+      JSON.stringify([...getMessages(key), value])
+    );
+  }
 }
 
-// Função para recuperar mensagens do localStorage
 export function getMessages(key: string): Message[] {
+  if (!isBrowser) return [];
   const data = window.localStorage.getItem(key);
   return data ? JSON.parse(data) : [];
 }

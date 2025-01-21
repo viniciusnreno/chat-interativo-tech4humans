@@ -1,3 +1,4 @@
+"use client";
 import { Message } from "@/types/chat";
 const ChatContent = ({ messages }: { messages: Message[] }) => {
   return (
@@ -23,5 +24,4 @@ const ChatContent = ({ messages }: { messages: Message[] }) => {
     </div>
   );
 };
-
 export default ChatContent;
