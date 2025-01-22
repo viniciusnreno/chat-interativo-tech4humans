@@ -13,7 +13,7 @@ interface ChatAreaProps {
 const ChatArea: React.FC<ChatAreaProps> = ({ chatId }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [useChatGPT, setUseChatGPT] = useState(false);
-  const [loading, setLoading] = useState(false); // Estado para controlar o carregamento
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const storedMessages = getMessages(chatId);
@@ -25,7 +25,7 @@ const ChatArea: React.FC<ChatAreaProps> = ({ chatId }) => {
     setMessages((prev) => [...prev, newMessage]);
 
     if (useChatGPT) {
-      setLoading(true); // Ativa o estado de carregamento
+      setLoading(true);
       try {
         const res = await axios.post("/api/chat", {
           message: newMessage.content,
@@ -43,7 +43,7 @@ const ChatArea: React.FC<ChatAreaProps> = ({ chatId }) => {
       } catch (error) {
         console.error("Erro na integração com a API do ChatGPT:", error);
       } finally {
-        setLoading(false); // Desativa o estado de carregamento
+        setLoading(false);
       }
     } else {
       try {
@@ -73,7 +73,7 @@ const ChatArea: React.FC<ChatAreaProps> = ({ chatId }) => {
         onSendMessage={handleSendMessage}
         useChatGPT={useChatGPT}
         setUseChatGPT={setUseChatGPT}
-        loading={loading} // Passa o estado de carregamento
+        loading={loading}
       />
     </div>
   );

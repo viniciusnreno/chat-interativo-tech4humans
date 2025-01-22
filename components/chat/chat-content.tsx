@@ -1,17 +1,27 @@
 "use client";
-import { useEffect, useRef } from "react";
+
+import { useEffect, useRef, useState } from "react";
 import { Message } from "@/types/chat";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { getUserName } from "@/utils/userService";
 
 const ChatContent = ({ messages }: { messages: Message[] }) => {
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  const [userName, setUserName] = useState<string | null>(null);
+
+  useEffect(() => {
+    const storedUserName = getUserName();
+    setUserName(storedUserName);
+  }, []);
 
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
+
+  const userInitial = userName ? userName.charAt(0).toUpperCase() : "?";
 
   return (
     <ScrollArea className="flex-1 overflow-hidden p-4">
@@ -22,17 +32,19 @@ const ChatContent = ({ messages }: { messages: Message[] }) => {
           .toString()
           .padStart(2, "0")}`;
 
+        const isUserMessage = message.sender === "user";
+
         return (
           <div
             key={message.timestamp}
-            className={`flex ${
-              message.sender === "user" ? "justify-end" : "justify-start"
+            className={`flex items-center ${
+              isUserMessage ? "justify-end" : "justify-start"
             }`}
           >
             <Card
-              className={`my-1 max-w-max bg-white ${
-                message.sender === "user"
-                  ? "text-primary"
+              className={`my-1 max-w-max ${
+                isUserMessage
+                  ? "bg-primary text-white"
                   : "bg-white text-gray-800"
               }`}
             >
@@ -43,6 +55,11 @@ const ChatContent = ({ messages }: { messages: Message[] }) => {
                 </div>
               </CardContent>
             </Card>
+            {isUserMessage && (
+              <div className="ms-1.5 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white">
+                {userInitial}
+              </div>
+            )}
           </div>
         );
       })}

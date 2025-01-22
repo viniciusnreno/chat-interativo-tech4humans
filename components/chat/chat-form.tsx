@@ -15,13 +15,13 @@ const ChatForm = ({
   onSendMessage: (message: Message) => void;
   useChatGPT: boolean;
   setUseChatGPT: (value: boolean) => void;
-  loading: boolean; // Estado de carregamento
+  loading: boolean;
 }) => {
   const [input, setInput] = useState("");
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || loading) return; // Não envia se estiver carregando
+    if (!input.trim() || loading) return;
 
     const newMessage: Message = {
       sender: "user",
