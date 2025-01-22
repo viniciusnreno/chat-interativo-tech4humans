@@ -19,7 +19,7 @@ Este projeto é uma aplicação frontend que simula um chat interativo com um as
 
 1. **Chat com Assistente Virtual**:
 
-   - Envio de mensagens pelo usuário com resposta automática do assistente.
+   - Envio de mensagens pelo usuário com resposta automática do assistente
    - Respostas fixadas ou aleatórias, geradas a partir de um array de frases.
 
 2. **Histórico de Conversas**:
