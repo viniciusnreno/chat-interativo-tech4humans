@@ -7,12 +7,12 @@ import { Label } from "@/components/ui/label";
 import { Message } from "@/types/chat";
 
 const ChatForm = ({
-  onSendMessage,
+  addMessage,
   useChatGPT,
   setUseChatGPT,
   loading,
 }: {
-  onSendMessage: (message: Message) => void;
+  addMessage: (message: Message) => void;
   useChatGPT: boolean;
   setUseChatGPT: (value: boolean) => void;
   loading: boolean;
@@ -29,7 +29,7 @@ const ChatForm = ({
       timestamp: Date.now().toString(),
     };
 
-    onSendMessage(newMessage);
+    addMessage(newMessage);
     setInput("");
   };
 
@@ -53,7 +53,7 @@ const ChatForm = ({
 
       <div className="mx-auto mt-2 flex items-center gap-2 sm:mx-0 sm:ml-2 sm:mt-0">
         <Label htmlFor="useChatGPT" className="text-sm">
-          ChatGPT
+          gpt-3.5-turbo
         </Label>
         <Switch
           id="useChatGPT"

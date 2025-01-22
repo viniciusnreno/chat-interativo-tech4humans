@@ -30,7 +30,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onChatSelect }) => {
           sidebarVisible ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <Card className="bg-primary text-primary-foreground">
+        <Card className="min-w-72 bg-primary text-primary-foreground">
           <CardHeader>
             <CardTitle className="text-lg">Chats</CardTitle>
           </CardHeader>
