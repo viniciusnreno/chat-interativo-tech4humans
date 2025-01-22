@@ -12,13 +12,14 @@ const ChatForm = ({
   const [input, setInput] = useState("");
 
   const handleSendMessage = (e: React.FormEvent) => {
+    
     e.preventDefault();
     if (!input.trim()) return;
 
     const newMessage: Message = {
       sender: "user",
       content: input.trim(),
-      timestamp: new Date().toISOString(),
+      timestamp: Date.now().toString(),
     };
 
     onSendMessage(newMessage);

@@ -1,27 +1,54 @@
 "use client";
+import { useEffect, useRef } from "react";
 import { Message } from "@/types/chat";
+import { Card, CardContent } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
+
 const ChatContent = ({ messages }: { messages: Message[] }) => {
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
+
   return (
-    <div className="flex-1 overflow-y-auto p-4">
-      {messages.map((message, index) => (
-        <div
-          key={index}
-          className={`flex ${
-            message.sender === "user" ? "justify-end" : "justify-start"
-          }`}
-        >
+    <ScrollArea className="flex-1 overflow-hidden p-4">
+      {messages.map((message) => {
+        const date = new Date(Number(message.timestamp));
+        const time = `${date.getHours().toString().padStart(2, "0")}:${date
+          .getMinutes()
+          .toString()
+          .padStart(2, "0")}`;
+
+        return (
           <div
-            className={`my-1 rounded-md p-2 ${
-              message.sender === "user"
-                ? "self-end bg-blue-600 text-white"
-                : "self-start bg-white text-gray-800"
+            key={message.timestamp}
+            className={`flex ${
+              message.sender === "user" ? "justify-end" : "justify-start"
             }`}
           >
-            {message.content}
+            <Card
+              className={`my-1 max-w-max bg-white ${
+                message.sender === "user"
+                  ? "text-primary"
+                  : "bg-white text-gray-800"
+              }`}
+            >
+              <CardContent className="break-words px-3 py-2">
+                <div>{message.content}</div>
+                <div className="mt-1 text-right text-xs text-gray-500">
+                  {time}
+                </div>
+              </CardContent>
+            </Card>
           </div>
-        </div>
-      ))}
-    </div>
+        );
+      })}
+      <div ref={scrollRef}></div>
+    </ScrollArea>
   );
 };
+
 export default ChatContent;
