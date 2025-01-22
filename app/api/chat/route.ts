@@ -1,5 +1,5 @@
-// app/api/chat/route.ts
 import { NextResponse } from "next/server";
+import axios from "axios";
 
 const responses = [
   "Como posso ajudar?",
@@ -31,14 +31,43 @@ const responses = [
 
 export async function POST(req: Request) {
   const body = await req.json();
-  const { message } = body;
+  const { message, useChatGPT } = body;
 
   if (!message) {
-    return NextResponse.json({ error: "Sem mensagem." }, { status: 400 });
+    return NextResponse.json(
+      { error: "Mensagem não fornecida." },
+      { status: 400 }
+    );
+  }
+
+  if (useChatGPT) {
+    try {
+      const gptResponse = await axios.post(
+        "https://api.openai.com/v1/completions",
+        {
+          model: "gpt-3.5-turbo-instruct",
+          prompt: message,
+          max_tokens: 100,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      return NextResponse.json({ response: gptResponse.data.choices[0].text });
+    } catch (error) {
+      console.error("Erro na API do ChatGPT:", error);
+      return NextResponse.json(
+        { error: "Erro ao se comunicar com o ChatGPT." },
+        { status: 500 }
+      );
+    }
   }
 
   const randomResponse =
     responses[Math.floor(Math.random() * responses.length)];
-
   return NextResponse.json({ response: randomResponse });
 }

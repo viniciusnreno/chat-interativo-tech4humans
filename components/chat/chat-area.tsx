@@ -12,6 +12,7 @@ interface ChatAreaProps {
 
 const ChatArea: React.FC<ChatAreaProps> = ({ chatId }) => {
   const [messages, setMessages] = useState<Message[]>([]);
+  const [useChatGPT, setUseChatGPT] = useState(false);
 
   useEffect(() => {
     const storedMessages = getMessages(chatId);
@@ -25,6 +26,7 @@ const ChatArea: React.FC<ChatAreaProps> = ({ chatId }) => {
     try {
       const res = await axios.post("/api/chat", {
         message: newMessage.content,
+        useChatGPT,
       });
 
       const botMessage: Message = {
@@ -36,14 +38,18 @@ const ChatArea: React.FC<ChatAreaProps> = ({ chatId }) => {
       setMessage(chatId, botMessage);
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
-      console.error("Erro na api:", error);
+      console.error("Erro na integração com a API:", error);
     }
   };
 
   return (
     <div className="flex h-screen flex-1 flex-col bg-gray-100">
       <ChatContent messages={messages} />
-      <ChatForm onSendMessage={handleSendMessage} />
+      <ChatForm
+        onSendMessage={handleSendMessage}
+        useChatGPT={useChatGPT}
+        setUseChatGPT={setUseChatGPT}
+      />
     </div>
   );
 };
