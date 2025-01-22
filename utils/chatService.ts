@@ -18,7 +18,7 @@ export function createChat(): Chat {
   };
 
   const chats = getData();
-  chats.push(newChat);
+  chats.unshift(newChat);
   setData(chats);
 
   return newChat;

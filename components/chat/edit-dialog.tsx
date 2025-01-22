@@ -21,7 +21,7 @@ const EditChatDialog: React.FC<EditChatDialogProps> = ({
   onClose,
   onSave,
 }) => {
-  const [newChatName, setNewChatName] = useState(chatId);
+  const [newChatName, setNewChatName] = useState(" ");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
