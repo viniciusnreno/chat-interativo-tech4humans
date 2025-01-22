@@ -36,7 +36,7 @@ const ChatContent = ({ messages }: { messages: Message[] }) => {
                   : "bg-white text-gray-800"
               }`}
             >
-              <CardContent className="break-words px-3 py-2">
+              <CardContent className="px-3 py-2">
                 <div>{message.content}</div>
                 <div className="mt-1 text-right text-xs text-gray-500">
                   {time}
