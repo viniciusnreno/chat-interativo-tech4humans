@@ -46,8 +46,10 @@ export async function POST(req: Request) {
         "https://api.openai.com/v1/completions",
         {
           model: "gpt-3.5-turbo-instruct",
-          prompt: message,
+          prompt: `Você é um assistente virtual. Responda de forma breve e direta ao seguinte comando ou pergunta: "${message}"`,
           max_tokens: 100,
+          temperature: 0.7,
+          top_p: 1,
         },
         {
           headers: {

@@ -10,16 +10,18 @@ const ChatForm = ({
   onSendMessage,
   useChatGPT,
   setUseChatGPT,
+  loading,
 }: {
   onSendMessage: (message: Message) => void;
   useChatGPT: boolean;
   setUseChatGPT: (value: boolean) => void;
+  loading: boolean; // Estado de carregamento
 }) => {
   const [input, setInput] = useState("");
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    if (!input.trim() || loading) return; // Não envia se estiver carregando
 
     const newMessage: Message = {
       sender: "user",
@@ -32,8 +34,11 @@ const ChatForm = ({
   };
 
   return (
-    <form onSubmit={handleSendMessage}>
-      <div className="flex flex-col items-center gap-2 bg-white p-4 sm:flex-row">
+    <form
+      onSubmit={handleSendMessage}
+      className="flex flex-col gap-2 bg-white p-4 sm:flex-row sm:items-center"
+    >
+      <div className="flex flex-1 gap-2">
         <Input
           type="text"
           placeholder="Digite sua mensagem..."
@@ -41,15 +46,20 @@ const ChatForm = ({
           onChange={(e) => setInput(e.target.value)}
           className="flex-grow"
         />
-        <Button type="submit">Enviar</Button>
-        <div className="flex items-center gap-2">
-          <Label htmlFor="useChatGPT">ChatGPT</Label>
-          <Switch
-            id="useChatGPT"
-            checked={useChatGPT}
-            onCheckedChange={setUseChatGPT}
-          />
-        </div>
+        <Button type="submit" disabled={loading}>
+          {loading ? "Enviando..." : "Enviar"}
+        </Button>
+      </div>
+
+      <div className="mx-auto mt-2 flex items-center gap-2 sm:mx-0 sm:ml-2 sm:mt-0">
+        <Label htmlFor="useChatGPT" className="text-sm">
+          ChatGPT
+        </Label>
+        <Switch
+          id="useChatGPT"
+          checked={useChatGPT}
+          onCheckedChange={setUseChatGPT}
+        />
       </div>
     </form>
   );

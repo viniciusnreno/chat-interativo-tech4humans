@@ -13,6 +13,7 @@ interface ChatAreaProps {
 const ChatArea: React.FC<ChatAreaProps> = ({ chatId }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [useChatGPT, setUseChatGPT] = useState(false);
+  const [loading, setLoading] = useState(false); // Estado para controlar o carregamento
 
   useEffect(() => {
     const storedMessages = getMessages(chatId);
@@ -23,22 +24,45 @@ const ChatArea: React.FC<ChatAreaProps> = ({ chatId }) => {
     setMessage(chatId, newMessage);
     setMessages((prev) => [...prev, newMessage]);
 
-    try {
-      const res = await axios.post("/api/chat", {
-        message: newMessage.content,
-        useChatGPT,
-      });
+    if (useChatGPT) {
+      setLoading(true); // Ativa o estado de carregamento
+      try {
+        const res = await axios.post("/api/chat", {
+          message: newMessage.content,
+          useChatGPT,
+        });
 
-      const botMessage: Message = {
-        sender: "bot",
-        content: res.data.response,
-        timestamp: Date.now().toString(),
-      };
+        const botMessage: Message = {
+          sender: "bot",
+          content: res.data.response,
+          timestamp: Date.now().toString(),
+        };
 
-      setMessage(chatId, botMessage);
-      setMessages((prev) => [...prev, botMessage]);
-    } catch (error) {
-      console.error("Erro na integração com a API:", error);
+        setMessage(chatId, botMessage);
+        setMessages((prev) => [...prev, botMessage]);
+      } catch (error) {
+        console.error("Erro na integração com a API do ChatGPT:", error);
+      } finally {
+        setLoading(false); // Desativa o estado de carregamento
+      }
+    } else {
+      try {
+        const res = await axios.post("/api/chat", {
+          message: newMessage.content,
+          useChatGPT,
+        });
+
+        const botMessage: Message = {
+          sender: "bot",
+          content: res.data.response,
+          timestamp: Date.now().toString(),
+        };
+
+        setMessage(chatId, botMessage);
+        setMessages((prev) => [...prev, botMessage]);
+      } catch (error) {
+        console.error("Erro ao processar a mensagem padrão:", error);
+      }
     }
   };
 
@@ -49,6 +73,7 @@ const ChatArea: React.FC<ChatAreaProps> = ({ chatId }) => {
         onSendMessage={handleSendMessage}
         useChatGPT={useChatGPT}
         setUseChatGPT={setUseChatGPT}
+        loading={loading} // Passa o estado de carregamento
       />
     </div>
   );
