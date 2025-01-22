@@ -44,13 +44,13 @@ Este projeto é uma aplicação frontend que simula um chat interativo com um as
 1. Clone o repositório:
 
    ```bash
-   git clone https://github.com/seu-usuario/chat-assistente.git
+   git clone https://github.com/viniciusnreno/chat-interativo-tech4humans.git
    ```
 
 2. Navegue até o diretório do projeto:
 
    ```bash
-   cd chat-assistente
+   cd chat-interativo-tech4humans
    ```
 
 3. Instale as dependências:
