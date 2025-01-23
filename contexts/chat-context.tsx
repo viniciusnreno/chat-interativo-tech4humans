@@ -8,6 +8,8 @@ import {
   updateChat,
 } from "@/utils/chatService";
 import { Chat } from "@/types/chat";
+import { toast } from "sonner";
+import { Pencil, Trash } from "lucide-react";
 
 interface ChatContextProps {
   chats: Chat[];
@@ -31,12 +33,16 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({
   const createNewChat = (): Chat => {
     const newChat = createChat();
     setChats((prevChats) => [newChat, ...prevChats]);
+    toast.success("Chat criado com sucesso!");
     return newChat;
   };
 
   const handleRemoveChat = (chatId: string) => {
     removeChat(chatId);
     setChats((prevChats) => prevChats.filter((chat) => chat.id !== chatId));
+    toast.success("Chat removido com sucesso!", {
+      icon: <Trash size={15} className="text-red-500" />,
+    });
   };
 
   const handleUpdateChat = (chatId: string, newName: string) => {
@@ -46,6 +52,9 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({
         chat.id === chatId ? { ...chat, name: newName } : chat
       )
     );
+    toast.success("Chat renomeado com sucesso!", {
+      icon: <Pencil size={15} />,
+    });
   };
 
   return (

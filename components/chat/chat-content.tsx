@@ -5,6 +5,7 @@ import { Message } from "@/types/chat";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { getUserName } from "@/utils/userService";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const ChatContent = ({ messages }: { messages: Message[] }) => {
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -56,9 +57,9 @@ const ChatContent = ({ messages }: { messages: Message[] }) => {
               </CardContent>
             </Card>
             {isUserMessage && (
-              <div className="ms-1.5 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white">
-                {userInitial}
-              </div>
+              <Avatar>
+                <AvatarFallback>{userInitial}</AvatarFallback>
+              </Avatar>
             )}
           </div>
         );

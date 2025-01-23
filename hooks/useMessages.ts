@@ -3,6 +3,7 @@ import { getMessages, setMessage } from "@/utils/chatService";
 import axios from "axios";
 import { Message } from "@/types/chat";
 import { getUserName } from "@/utils/userService";
+import { toast } from "sonner";
 
 export const useMessages = (
   chatId: string,
@@ -42,6 +43,10 @@ export const useMessages = (
       setMessage(chatId, botMessage);
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
+      toast.error(
+        `Não foi possível conectar ao modelo ${model.name}. Por favor, tente novamente.`
+      );
+
       console.error("Erro na integração com o modelo: ", model.name, error);
     } finally {
       setLoading(false);

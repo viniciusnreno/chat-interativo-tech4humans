@@ -4,7 +4,7 @@ export async function POST(req: Request) {
   const body = await req.json();
   const { message } = body;
 
-  if (!message) {
+  if (message) {
     return NextResponse.json(
       { error: "Mensagem não fornecida." },
       { status: 400 }

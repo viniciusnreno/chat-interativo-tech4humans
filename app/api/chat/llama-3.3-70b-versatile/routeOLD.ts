@@ -1,5 +1,6 @@
 import Groq from "groq-sdk";
 import { NextResponse } from "next/server";
+import { toast } from "sonner";
 
 const groq = new Groq({ apiKey: process.env.GROG_LLM_API_KEY });
 
@@ -54,6 +55,7 @@ export async function POST(req: Request) {
       response: responseContent.trim(),
     });
   } catch (error) {
+    toast.error("Erro ao se comunicar com o llama-3.3-70b-versatile.");
     console.error(
       "Erro ao se comunicar com a API do llama-3.3-70b-versatile:",
       error
