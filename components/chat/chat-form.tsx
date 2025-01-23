@@ -23,6 +23,16 @@ const ChatForm = ({
   setModel: (value: { active: boolean; name: string }) => void;
   loading: boolean;
 }) => {
+  const models = [
+    "gpt-3.5-turbo-instruct",
+    "llama-3.3-70b-versatile",
+    "llama-3.1-8b-instant",
+    "llama-guard-3-8b",
+    "llama3-70b-8192",
+    "llama3-8b-8192",
+    "gemma2-9b-it",
+  ];
+
   const [input, setInput] = useState("");
 
   const handleSendMessage = (e: React.FormEvent) => {
@@ -73,12 +83,11 @@ const ChatForm = ({
         >
           <SelectTrigger className="w-[200px]">{model.name}</SelectTrigger>
           <SelectContent>
-            <SelectItem value="gpt-3.5-turbo-instruct">
-              gpt-3.5-turbo-instruct
-            </SelectItem>
-            <SelectItem value="llama-3.3-70b-versatile">
-              llama-3.3-70b-versatile
-            </SelectItem>
+            {models.map((model) => (
+              <SelectItem key={model} value={model}>
+                {model}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>

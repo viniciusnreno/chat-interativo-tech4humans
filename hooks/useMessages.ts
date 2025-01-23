@@ -27,6 +27,7 @@ export const useMessages = (
         `/api/chat/${model.active ? model.name : "presetList"}`,
         {
           message: newMessage.content,
+          model: model.name,
           username: getUserName(),
           history: messages.map((m) => {
             return { role: m.role, content: m.content };
