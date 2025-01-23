@@ -30,7 +30,7 @@ const ChatForm = ({
     if (!input.trim() || loading) return;
 
     const newMessage: Message = {
-      sender: "user",
+      role: "user",
       content: input.trim(),
       timestamp: Date.now().toString(),
     };
@@ -73,8 +73,12 @@ const ChatForm = ({
         >
           <SelectTrigger className="w-[200px]">{model.name}</SelectTrigger>
           <SelectContent>
-            <SelectItem value="gpt-3.5-turbo">gpt-3.5-turbo</SelectItem>
-            <SelectItem value="LLM">LLM</SelectItem>
+            <SelectItem value="gpt-3.5-turbo-instruct">
+              gpt-3.5-turbo-instruct
+            </SelectItem>
+            <SelectItem value="llama-3.3-70b-versatile">
+              llama-3.3-70b-versatile
+            </SelectItem>
           </SelectContent>
         </Select>
       </div>

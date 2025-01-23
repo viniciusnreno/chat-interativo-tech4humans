@@ -1,5 +1,5 @@
 export interface Message {
-  sender: "user" | "bot";
+  role: "user" | "assistant";
   content: string;
   timestamp: string;
 }

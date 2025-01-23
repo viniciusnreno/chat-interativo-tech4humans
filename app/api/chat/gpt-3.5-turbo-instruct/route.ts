@@ -31,12 +31,12 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       // response: gptResponse.data.choices[0].text.trim(),
-      response: "resposta do chatgpt",
+      response: "resposta do gpt-3.5-turbo-instruct",
     });
   } catch (error) {
-    console.error("Erro na API do ChatGPT:", error);
+    console.error("Erro na API do gpt-3.5-turbo-instruct:", error);
     return NextResponse.json(
-      { error: "Erro ao se comunicar com o ChatGPT." },
+      { error: "Erro ao se comunicar com o gpt-3.5-turbo-instruct." },
       { status: 500 }
     );
   }

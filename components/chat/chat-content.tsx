@@ -32,7 +32,7 @@ const ChatContent = ({ messages }: { messages: Message[] }) => {
           .toString()
           .padStart(2, "0")}`;
 
-        const isUserMessage = message.sender === "user";
+        const isUserMessage = message.role === "user";
 
         return (
           <div

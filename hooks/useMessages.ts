@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { getMessages, setMessage } from "@/utils/chatService";
 import axios from "axios";
 import { Message } from "@/types/chat";
+import { getUserName } from "@/utils/userService";
 
 export const useMessages = (
   chatId: string,
@@ -25,14 +26,15 @@ export const useMessages = (
         `/api/chat/${model.active ? model.name : "presetList"}`,
         {
           message: newMessage.content,
+          username: getUserName(),
           history: messages.map((m) => {
-            return { sender: m.sender, content: m.content };
+            return { role: m.role, content: m.content };
           }),
         }
       );
 
       const botMessage: Message = {
-        sender: "bot",
+        role: "assistant",
         content: res.data.response,
         timestamp: Date.now().toString(),
       };
@@ -40,7 +42,7 @@ export const useMessages = (
       setMessage(chatId, botMessage);
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
-      console.error("Erro na integração com o ChatGPT:", error);
+      console.error("Erro na integração com o modelo: ", model.name, error);
     } finally {
       setLoading(false);
     }

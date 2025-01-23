@@ -33,8 +33,9 @@ const statements = [
 
 export async function POST(req: Request) {
   const body = await req.json();
-  const { message } = body;
+  const { message, history } = body;
 
+  console.log(history);
   if (!message) {
     return NextResponse.json(
       { error: "Mensagem não fornecida." },
