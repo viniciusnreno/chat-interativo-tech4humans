@@ -3,7 +3,10 @@ import { getMessages, setMessage } from "@/utils/chatService";
 import axios from "axios";
 import { Message } from "@/types/chat";
 
-export const useMessages = (chatId: string, useChatGPT: boolean) => {
+export const useMessages = (
+  chatId: string,
+  model: { active: boolean; name: string }
+) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -18,10 +21,15 @@ export const useMessages = (chatId: string, useChatGPT: boolean) => {
 
     setLoading(true);
     try {
-      const res = await axios.post("/api/chat", {
-        message: newMessage.content,
-        useChatGPT,
-      });
+      const res = await axios.post(
+        `/api/chat/${model.active ? model.name : "presetList"}`,
+        {
+          message: newMessage.content,
+          history: messages.map((m) => {
+            return { sender: m.sender, content: m.content };
+          }),
+        }
+      );
 
       const botMessage: Message = {
         sender: "bot",

@@ -10,16 +10,16 @@ interface ChatAreaProps {
 }
 
 const ChatArea: React.FC<ChatAreaProps> = ({ chatId }) => {
-  const [useChatGPT, setUseChatGPT] = useState(false);
-  const { messages, addMessage, loading } = useMessages(chatId, useChatGPT);
+  const [model, setModel] = useState({ active: false, name: "gpt-3.5-turbo" });
+  const { messages, addMessage, loading } = useMessages(chatId, model);
 
   return (
     <div className="flex h-screen flex-1 flex-col bg-gray-100">
       <ChatContent messages={messages} />
       <ChatForm
         addMessage={addMessage}
-        useChatGPT={useChatGPT}
-        setUseChatGPT={setUseChatGPT}
+        model={model}
+        setModel={setModel}
         loading={loading}
       />
     </div>

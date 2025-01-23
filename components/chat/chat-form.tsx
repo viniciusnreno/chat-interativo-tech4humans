@@ -2,19 +2,25 @@
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 import { Message } from "@/types/chat";
 
 const ChatForm = ({
   addMessage,
-  useChatGPT,
-  setUseChatGPT,
+  model,
+  setModel,
   loading,
 }: {
   addMessage: (message: Message) => void;
-  useChatGPT: boolean;
-  setUseChatGPT: (value: boolean) => void;
+  model: { active: boolean; name: string };
+  setModel: (value: { active: boolean; name: string }) => void;
   loading: boolean;
 }) => {
   const [input, setInput] = useState("");
@@ -52,14 +58,25 @@ const ChatForm = ({
       </div>
 
       <div className="mx-auto mt-2 flex items-center gap-2 sm:mx-0 sm:ml-2 sm:mt-0">
-        <Label htmlFor="useChatGPT" className="text-sm">
-          gpt-3.5-turbo
+        <Label htmlFor="use-ai" className="text-sm">
+          AI
         </Label>
         <Switch
-          id="useChatGPT"
-          checked={useChatGPT}
-          onCheckedChange={setUseChatGPT}
+          id="use-ai"
+          checked={model.active}
+          onCheckedChange={(active) => setModel({ ...model, active })}
         />
+
+        <Select
+          value={model.name}
+          onValueChange={(name) => setModel({ ...model, name })}
+        >
+          <SelectTrigger className="w-[200px]">{model.name}</SelectTrigger>
+          <SelectContent>
+            <SelectItem value="gpt-3.5-turbo">gpt-3.5-turbo</SelectItem>
+            <SelectItem value="LLM">LLM</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
     </form>
   );
