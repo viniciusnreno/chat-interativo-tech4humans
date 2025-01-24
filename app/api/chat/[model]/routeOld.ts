@@ -15,8 +15,8 @@ export async function POST(req: Request) {
     );
   }
 
-  if (model === "gpt-3.5-turbo-instruct") {
-    try {
+  try {
+    if (model === "gpt-3.5-turbo-instruct") {
       const gptResponse = await axios.post(
         "https://api.openai.com/v1/completions",
         {
@@ -37,15 +37,7 @@ export async function POST(req: Request) {
       return NextResponse.json({
         response: gptResponse.data.choices[0].text.trim(),
       });
-    } catch (error) {
-      console.error("Erro na API do gpt-3.5-turbo-instruct:", error);
-      return NextResponse.json(
-        { error: "Erro ao se comunicar com o gpt-3.5-turbo-instruct." },
-        { status: 500 }
-      );
-    }
-  } else {
-    try {
+    } else {
       const systemMessage = {
         role: "system",
         content: `Você é um assistente virtual e está conversando com ${username}. Responda de forma breve, direta e educada (máximo de 40 palavras) à última mensagem.`,
@@ -77,12 +69,12 @@ export async function POST(req: Request) {
       return NextResponse.json({
         response: responseContent.trim(),
       });
-    } catch (error) {
-      console.error("Erro ao se comunicar com a API do ", model, error);
-      return NextResponse.json(
-        { error: "Erro ao se comunicar com o ", model },
-        { status: 500 }
-      );
     }
+  } catch (error) {
+    console.error("Erro na API do modelo: ", model, error);
+    return NextResponse.json(
+      { error: `Erro ao se comunicar com o modelo ${model}` },
+      { status: 500 }
+    );
   }
 }

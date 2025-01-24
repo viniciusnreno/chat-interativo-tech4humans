@@ -36,7 +36,9 @@ export default function Home() {
           <ChatArea chatId={activeChatId} />
         ) : (
           <div className="flex w-full flex-col items-center justify-center">
-            <h1 className="mb-3">Olá, {userName}! Como posso te ajudar?</h1>
+            <h1 className="mb-3 text-xl">
+              Olá, {userName}! Como posso te ajudar?
+            </h1>
             <Button
               onClick={() => {
                 const newChat = createNewChat();

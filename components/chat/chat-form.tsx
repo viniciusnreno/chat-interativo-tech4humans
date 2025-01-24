@@ -27,7 +27,6 @@ const ChatForm = ({
     "gpt-3.5-turbo-instruct",
     "llama-3.3-70b-versatile",
     "llama-3.1-8b-instant",
-    "llama-guard-3-8b",
     "llama3-70b-8192",
     "llama3-8b-8192",
     "gemma2-9b-it",
@@ -76,20 +75,21 @@ const ChatForm = ({
           checked={model.active}
           onCheckedChange={(active) => setModel({ ...model, active })}
         />
-
-        <Select
-          value={model.name}
-          onValueChange={(name) => setModel({ ...model, name })}
-        >
-          <SelectTrigger className="w-[200px]">{model.name}</SelectTrigger>
-          <SelectContent>
-            {models.map((model) => (
-              <SelectItem key={model} value={model}>
-                {model}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        {model.active && (
+          <Select
+            value={model.name}
+            onValueChange={(name) => setModel({ ...model, name })}
+          >
+            <SelectTrigger className="w-[200px]">{model.name}</SelectTrigger>
+            <SelectContent>
+              {models.map((model) => (
+                <SelectItem key={model} value={model}>
+                  {model}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
       </div>
     </form>
   );

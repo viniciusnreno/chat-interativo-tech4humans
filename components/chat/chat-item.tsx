@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Ellipsis, Pencil, Trash } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface ChatItemProps {
   chatName: string;
@@ -24,28 +25,33 @@ const ChatItem: React.FC<ChatItemProps> = ({
   onRemove,
 }) => {
   return (
-    <div className="flex cursor-pointer items-center justify-between rounded-md p-2 hover:bg-gray-700">
-      <span className="flex-grow" onClick={() => onSelect(chatId)}>
-        {chatName}
-      </span>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon" className="me-2">
-            <Ellipsis />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuItem onClick={() => onEdit(chatId)}>
-            <Pencil />
-            Renomear
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => onRemove(chatId)}>
-            <Trash className="text-red-500" />
-            Remover
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </div>
+    <Card
+      className={
+        "cursor-pointer bg-primary text-secondary shadow-none transition-all hover:bg-gray-500"
+      }
+      onClick={() => onSelect(chatId)}
+    >
+      <CardContent className="flex items-center justify-between p-2">
+        <span className="flex-grow">{chatName}</span>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon" className="me-2">
+              <Ellipsis />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem onClick={() => onEdit(chatId)}>
+              <Pencil />
+              Renomear
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => onRemove(chatId)}>
+              <Trash className="text-red-500" />
+              Remover
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </CardContent>
+    </Card>
   );
 };
 

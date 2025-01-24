@@ -10,7 +10,10 @@ interface ChatAreaProps {
 }
 
 const ChatArea: React.FC<ChatAreaProps> = ({ chatId }) => {
-  const [model, setModel] = useState({ active: false, name: "gpt-3.5-turbo" });
+  const [model, setModel] = useState({
+    active: false,
+    name: "gpt-3.5-turbo-instruct",
+  });
   const { messages, addMessage, loading } = useMessages(chatId, model);
 
   return (

@@ -52,9 +52,7 @@ const UserNameDialog: React.FC<UserNameDialogProps> = ({ onSave }) => {
             {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
           </div>
           <DialogFooter>
-            <Button type="submit" variant="secondary" className="w-full">
-              Salvar
-            </Button>
+            <Button type="submit">Salvar</Button>
           </DialogFooter>
         </form>
       </DialogContent>
