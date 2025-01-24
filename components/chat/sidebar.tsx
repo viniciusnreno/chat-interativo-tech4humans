@@ -7,14 +7,15 @@ import { useChatContext } from "@/contexts/chat-context";
 import { Menu } from "lucide-react";
 
 interface SidebarProps {
-  onChatSelect: (chatId: string) => void;
+  activeChatId: string | null;
+  setActiveChatId: (chatId: string | null) => void;
 }
-
-const Sidebar: React.FC<SidebarProps> = ({ onChatSelect }) => {
+const Sidebar: React.FC<SidebarProps> = ({ activeChatId, setActiveChatId }) => {
   const { chats, createNewChat, handleRemoveChat, handleUpdateChat } =
     useChatContext();
-  const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
+
   const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [editingChatId, setEditingChatId] = useState<string | null>(null);
 
   return (
     <>
@@ -40,7 +41,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onChatSelect }) => {
               className="w-full"
               onClick={() => {
                 const newChat = createNewChat();
-                onChatSelect(newChat.id);
+                setActiveChatId(newChat.id);
                 setSidebarVisible(false);
               }}
             >
@@ -52,11 +53,12 @@ const Sidebar: React.FC<SidebarProps> = ({ onChatSelect }) => {
                   key={chat.id}
                   chatId={chat.id}
                   chatName={chat.name}
+                  isSelected={activeChatId === chat.id}
                   onSelect={(chatId) => {
-                    onChatSelect(chatId);
+                    setActiveChatId(chatId);
                     setSidebarVisible(false);
                   }}
-                  onEdit={() => setSelectedChatId(chat.id)}
+                  onEdit={() => setEditingChatId(chat.id)}
                   onRemove={() => handleRemoveChat(chat.id)}
                 />
               ))}
@@ -64,10 +66,10 @@ const Sidebar: React.FC<SidebarProps> = ({ onChatSelect }) => {
           </CardContent>
         </Card>
       </div>
-      {selectedChatId && (
+      {editingChatId && (
         <EditChatDialog
-          chatId={selectedChatId}
-          onClose={() => setSelectedChatId(null)}
+          chatId={editingChatId}
+          onClose={() => setEditingChatId(null)}
           onSave={handleUpdateChat}
         />
       )}

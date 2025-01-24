@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 export default function Home() {
   const { createNewChat } = useChatContext();
   const [userName, setUserNameState] = React.useState<string | null>(null);
-  const [activeChatId, setActiveChatId] = React.useState<string>("");
+  const [activeChatId, setActiveChatId] = React.useState<string | null>("");
 
   React.useEffect(() => {
     const savedName = getUserName();
@@ -31,7 +31,11 @@ export default function Home() {
   return (
     <main>
       <div className="flex h-screen">
-        <Sidebar onChatSelect={setActiveChatId} />
+        <Sidebar
+          activeChatId={activeChatId}
+          setActiveChatId={setActiveChatId}
+        />
+
         {activeChatId ? (
           <ChatArea chatId={activeChatId} />
         ) : (

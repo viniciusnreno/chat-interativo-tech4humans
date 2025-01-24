@@ -12,6 +12,7 @@ import { Card, CardContent } from "@/components/ui/card";
 interface ChatItemProps {
   chatName: string;
   chatId: string;
+  isSelected: boolean;
   onSelect: (chatId: string) => void;
   onEdit: (chatId: string) => void;
   onRemove: (chatId: string) => void;
@@ -23,12 +24,11 @@ const ChatItem: React.FC<ChatItemProps> = ({
   onSelect,
   onEdit,
   onRemove,
+  isSelected,
 }) => {
   return (
     <Card
-      className={
-        "cursor-pointer bg-primary text-secondary shadow-none transition-all hover:bg-gray-500"
-      }
+      className={`cursor-pointer bg-primary text-secondary shadow-none transition-all hover:bg-zinc-700 ${isSelected ? "bg-zinc-700" : ""}`}
       onClick={() => onSelect(chatId)}
     >
       <CardContent className="flex items-center justify-between p-2">
