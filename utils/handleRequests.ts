@@ -10,7 +10,7 @@ export async function handleGPTRequest(
   message: string,
   model: string
 ) {
-  const prompt = `Você é um assistente virtual. Meu nome é ${username}. Use o contexto da conversa a seguir para responder de forma breve e direta (máximo de 40 palavras) à última mensagem.\n\n${history}\n\nÚltima mensagem do usuário: "${message}"`;
+  const prompt = `Você é um assistente virtual. Meu nome é ${username}. Use o contexto da conversa a seguir para responder de forma breve e direta (máximo de 100 palavras) à última mensagem.\n\n${history}\n\nÚltima mensagem do usuário: "${message}"`;
 
   const response = await axios.post(
     "https://api.openai.com/v1/completions",
@@ -41,7 +41,7 @@ export async function handleDeepSeekRequest(
     messages: [
       {
         role: "system",
-        content: `Você é um assistente virtual e está conversando com ${username}. Responda de forma breve, direta e educada à última mensagem. Nunca ultrapasse o limite de 30 palavras`,
+        content: `Você é um assistente virtual e está conversando com ${username}. Responda de forma breve, direta e educada à última mensagem. Nunca ultrapasse o limite de 100 palavras`,
       },
       ...history,
       {
@@ -71,7 +71,7 @@ export async function handleGroqRequest(
     messages: [
       {
         role: "system",
-        content: `Você é um assistente virtual e está conversando com ${username}. Responda de forma breve, direta e educada (máximo de 40 palavras) à última mensagem.`,
+        content: `Você é um assistente virtual e está conversando com ${username}. Responda de forma breve, direta e educada (máximo de 100 palavras) à última mensagem.`,
       },
       ...history,
       {
