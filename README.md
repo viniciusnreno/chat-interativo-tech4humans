@@ -104,10 +104,11 @@ Acesse a versão online do projeto: [https://chat-interativo-tech4humans.vercel.
 ## 🌟 Estrutura do Projeto
 
 - app/api/chat/[model]/route.ts: Endpoint responsável por processar mensagens via modelo de IA.
-- app/api/chat/presetList/route.ts: Endpoint para listar modelos disponíveis.
+- app/api/chat/presetList/route.ts: Endpoint que retorna respostas genéricas baseadas no conteúdo da mensagem recebida.
 - app/page.tsx: Página principal do chat.
 - components/: Contém os componentes reutilizáveis como formulário de envio, conteúdo do chat, e itens de interface.
 - contexts/chat-context.tsx: Gerenciamento de estado e lógica de conversas.
+- hooks/useMessages.ts: Hook responsável por gerenciar o estado das mensagens, realizar chamadas aos endpoints e atualizar o histórico do chat.
 - utils/chatService.ts: Gerenciamento do histórico e manipulação de chats no localStorage.
 - utils/userService.ts: Funções para salvar e recuperar o nome do usuário.
 - utils/handleRequest.tsx: Utilitário para chamadas às APIs.
@@ -119,7 +120,7 @@ Acesse a versão online do projeto: [https://chat-interativo-tech4humans.vercel.
 O padrão BFF foi implementado através do App Router do Next.js:
 
 - Endpoint /api/chat/[model]: Gerencia a lógica de mensagens e respostas do assistente virtual com suporte a múltiplos modelos de IA.
-- Endpoint /api/chat/presetList: Retorna a lista de modelos disponíveis para seleção no front-end.
+- Endpoint /api/chat/presetList: Retorna respostas predefinidas ou genéricas baseadas no contexto da mensagem recebida.
 
 ---
 
