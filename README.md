@@ -1,6 +1,6 @@
 ## Chat com Assistente Virtual 🤖💬
 
-Este projeto é uma aplicação frontend que simula um chat interativo com um assistente virtual. Ele utiliza armazenamento local para gerenciar o histórico de conversas e implementa o padrão **Backend for Frontend (BFF)** com Next.js, permitindo a integração com diferentes modelos de IA ou respostas fixadas/aleatórias.
+Este projeto é uma aplicação que simula um chat interativo com um assistente virtual. Ele utiliza armazenamento local para gerenciar o histórico de conversas e implementa o padrão **Backend for Frontend (BFF)** com Next.js, permitindo a integração com diferentes modelos de IA ou respostas fixadas/aleatórias.
 
 ---
 
@@ -36,8 +36,9 @@ Este projeto é uma aplicação frontend que simula um chat interativo com um as
          - gemma2-9b-it
        - **OpenAI API**:
          - gpt-3.5-turbo-instruct
-       - **Local (Ollama)**:
-         - deepseek-r1:8b (local)
+       - **Ollama (Local) 🦙**:
+         - deepseek-r1:8b [veja como instalar](#ollama---modelos-de-ia-locais)
+   
    - **Modo IA desativado**: O assistente responde utilizando frases predefinidas em um array local.
 
 3. **Histórico de Conversas**:
@@ -86,10 +87,6 @@ Este projeto é uma aplicação frontend que simula um chat interativo com um as
    GROQ_API_KEY=sua_groq_api_key
    ```
 
-5. Instale o **Ollama** (opcional para o modelo local):
-
-   - Siga as instruções no [site oficial do Ollama](https://ollama.ai) para configurar o modelo `deepseek-r1:8b`.
-
 6. Execute o servidor de desenvolvimento:
 
    ```bash
@@ -103,6 +100,8 @@ Este projeto é uma aplicação frontend que simula um chat interativo com um as
 ## 🌐 Link Hospedado
 
 Acesse a versão online do projeto: [https://chat-interativo-tech4humans.vercel.app/](https://chat-interativo-tech4humans.vercel.app/).
+
+---
 
 ## 🌟 Estrutura do Projeto
 
@@ -126,5 +125,31 @@ O padrão BFF foi implementado através do App Router do Next.js:
 - Endpoint /api/chat/presetList: Retorna respostas predefinidas ou genéricas baseadas no contexto da mensagem recebida.
 
 ---
+
+## Ollama - Modelos de IA Locais
+
+**Ollama** é uma ferramenta que permite executar modelos de IA localmente em sua máquina, garantindo maior privacidade e controle sobre os dados. Este projeto utiliza o modelo **deepseek-r1:8b**, que roda localmente e está acessível através da porta `http://127.0.0.1:11434/api/chat`.
+
+### Como instalar e configurar o Ollama:
+
+1. Acesse o site oficial do Ollama: [https://ollama.ai](https://ollama.ai).
+2. Faça o download e instale a ferramenta de acordo com o sistema operacional da sua máquina.
+3. Após a instalação, baixe o modelo **deepseek-r1:8b** com o seguinte comando:
+   
+   ```bash
+   ollama run deepseek-r1:8b
+   ```
+   
+4. Certifique-se de que o serviço do Ollama está rodando corretamente. Para verificar o status, utilize o comando:
+
+   ```bash
+   systemctl status ollama.service
+   ```
+   
+   Se o serviço não estiver ativo, inicie-o com o comando:
+   
+   ```bash
+   ollama serve
+   ```
 
 💡 Desenvolvido por [Vinicius Renó](https://viniciusreno.vercel.app/). 🚀
