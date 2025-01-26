@@ -1,6 +1,6 @@
-# Chat com Assistente Virtual 🤖💬
+## Chat com Assistente Virtual 🤖💬
 
-Este projeto é uma aplicação frontend que simula um chat interativo com um assistente virtual. Ele utiliza armazenamento local para gerenciar histórico de conversas e um padrão **Backend for Frontend (BFF)** implementado com Next.js para retornar respostas fixadas ou aleatórias.
+Este projeto é uma aplicação frontend que simula um chat interativo com um assistente virtual. Ele utiliza armazenamento local para gerenciar o histórico de conversas e implementa o padrão **Backend for Frontend (BFF)** com Next.js, permitindo a integração com diferentes modelos de IA ou respostas fixadas/aleatórias.
 
 ---
 
@@ -12,30 +12,44 @@ Este projeto é uma aplicação frontend que simula um chat interativo com um as
 - **[TypeScript](https://www.typescriptlang.org/)**: Adiciona tipagem estática ao JavaScript para maior confiabilidade no código.
 - **[TailwindCSS](https://tailwindcss.com/)**: Framework CSS utilitário para estilização rápida e responsiva.
 - **[shadcn UI](https://shadcn.dev/)**: Biblioteca de componentes de interface elegantes e acessíveis.
+- **[Sonner](https://sonner.dev/)**: Biblioteca para exibição de notificações dinâmicas e estilizadas.
 
 ---
 
 ## 📝 Funcionalidades
 
 1. **Chat com Assistente Virtual**:
+   - Envio de mensagens pelo usuário com resposta automática do assistente.
+   - Integração com modelos de IA ou uso de respostas fixadas/aleatórias.
+   - Respostas podem ser geradas via array predefinido ou por modelos de IA.
 
-   - Envio de mensagens pelo usuário com resposta automática do assistente
-   - Respostas fixadas ou aleatórias, geradas a partir de um array de frases.
+2. **Switch de IA**:
+   - **Modo IA ativado**: O usuário pode escolher entre os modelos disponíveis.
+     - Modelos suportados:
+       - **Groq API**:
+         - llama-3.3-70b-versatile
+         - llama-3.1-8b-instant
+         - llama3-70b-8192
+         - llama3-8b-8192
+         - gemma2-9b-it
+       - **OpenAI API**:
+         - gpt-3.5-turbo-instruct
+       - **Local (Ollama)**:
+         - deepseek-r1:8b (local)
+   - **Modo IA desativado**: O assistente responde utilizando frases predefinidas em um array local.
 
-2. **Histórico de Conversas**:
-
-   - Armazenamento local de mensagens e chats para persistência após o refresh da página.
+3. **Histórico de Conversas**:
+   - Armazenamento local (localStorage) das conversas para persistência após o refresh da página.
    - Possibilidade de renomear os chats para melhor organização.
 
-3. **Gestão de Conversas**:
-
+4. **Gestão de Conversas**:
    - Criação de novos chats.
    - Exclusão de chats existentes.
    - Renomeação de chats diretamente pela interface.
 
-4. **Integração com Backend for Frontend (BFF)**:
+5. **Integração com Backend for Frontend (BFF)**:
    - Uso do App Router do Next.js para gerenciar mensagens entre cliente e servidor.
-   - Endpoint `/api/chat` que processa e retorna mensagens do assistente virtual.
+   - Endpoints para processar mensagens e listar modelos disponíveis.
 
 ---
 
@@ -44,7 +58,7 @@ Este projeto é uma aplicação frontend que simula um chat interativo com um as
 1. Clone o repositório:
 
    ```bash
-   git clone https://github.com/viniciusnreno/chat-interativo-tech4humans.git
+      git clone https://github.com/viniciusnreno/chat-interativo-tech4humans.git
    ```
 
 2. Navegue até o diretório do projeto:
@@ -59,13 +73,22 @@ Este projeto é uma aplicação frontend que simula um chat interativo com um as
    npm install
    ```
 
-4. Execute o servidor de desenvolvimento:
+4. Configure as variáveis de ambiente:
+   - Crie um arquivo `.env` na raiz do projeto e adicione as chaves de API necessárias:
+   ```bash
+   OPENAI_API_KEY=sua_openai_api_key
+   GROQ_API_KEY=sua_groq_api_key
+   ```
 
+5. Instale o **Ollama** (opcional para o modelo local):
+- Siga as instruções no [site oficial do Ollama](https://ollama.ai) para configurar o modelo `deepseek-r1:8b`.
+
+6. Execute o servidor de desenvolvimento:
    ```bash
    npm run dev
    ```
 
-5. Acesse a aplicação em: [http://localhost:3000](http://localhost:3000)
+7. Acesse a aplicação em: http://localhost:3000
 
 ---
 
@@ -73,14 +96,18 @@ Este projeto é uma aplicação frontend que simula um chat interativo com um as
 
 Acesse a versão online do projeto: [https://chat-interativo-tech4humans.vercel.app/](https://chat-interativo-tech4humans.vercel.app/).
 
----
+ 
 
 ## 🌟 Estrutura do Projeto
 
-- **`app/api/chat/route.ts`**: Endpoint responsável por processar mensagens e retornar respostas do assistente.
-- **`app/chat/page.tsx`**: Página principal do chat.
-- **`components/`**: Contém os componentes reutilizáveis como formulário de envio, conteúdo do chat, e itens de interface.
-- **`utils/chatService.ts`**: Gerenciamento do histórico e manipulação de chats no `localStorage`.
+- app/api/chat/[model]/route.ts: Endpoint responsável por processar mensagens via modelo de IA.
+- app/api/chat/presetList/route.ts: Endpoint para listar modelos disponíveis.
+- app/page.tsx: Página principal do chat.
+- components/: Contém os componentes reutilizáveis como formulário de envio, conteúdo do chat, e itens de interface.
+- contexts/chat-context.tsx: Gerenciamento de estado e lógica de conversas.
+- utils/chatService.ts: Gerenciamento do histórico e manipulação de chats no localStorage.
+- utils/userService.ts: Funções para salvar e recuperar o nome do usuário.
+- utils/handleRequest.tsx: Utilitário para chamadas às APIs.
 
 ---
 
@@ -88,8 +115,8 @@ Acesse a versão online do projeto: [https://chat-interativo-tech4humans.vercel.
 
 O padrão BFF foi implementado através do App Router do Next.js:
 
-- **Endpoint `/api/chat`**: Gerencia a lógica de respostas do assistente virtual.
-- O cliente envia mensagens para o servidor, que processa e retorna uma resposta aleatória.
+- Endpoint /api/chat/[model]: Gerencia a lógica de mensagens e respostas do assistente virtual com suporte a múltiplos modelos de IA.
+- Endpoint /api/chat/presetList: Retorna a lista de modelos disponíveis para seleção no front-end.
 
 ---
 
