@@ -36,6 +36,9 @@ Este projeto é uma aplicação que simula um chat interativo com um assistente 
          - gemma2-9b-it
        - **OpenAI API**:
          - gpt-3.5-turbo-instruct
+       - **[Ollama](#-💻-ollama---modelos-de-ia-locais) 💻**:
+         - deepseek-r1:8b
+   
    - **Modo IA desativado**: O assistente responde utilizando frases predefinidas em um array local.
 
 3. **Histórico de Conversas**:
@@ -123,7 +126,7 @@ O padrão BFF foi implementado através do App Router do Next.js:
 
 ---
 
-## 🤖 Ollama - Modelos de IA Locais
+## 💻 Ollama - Modelos de IA Locais
 
 **Ollama** é uma ferramenta que permite executar modelos de IA localmente em sua máquina, garantindo maior privacidade e controle sobre os dados. Este projeto utiliza o modelo **deepseek-r1:8b**, que roda localmente e está acessível através da porta `http://127.0.0.1:11434/api/chat`.
 
