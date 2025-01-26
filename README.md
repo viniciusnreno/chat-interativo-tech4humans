@@ -76,6 +76,7 @@ Este projeto é uma aplicação frontend que simula um chat interativo com um as
 4. Configure as variáveis de ambiente:
 
    - Crie um arquivo `.env` na raiz do projeto e adicione as chaves de API necessárias:
+
    ```bash
    OPENAI_API_KEY=sua_openai_api_key
    GROQ_API_KEY=sua_groq_api_key
