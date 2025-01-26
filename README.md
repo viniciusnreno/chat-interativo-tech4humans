@@ -12,18 +12,20 @@ Este projeto é uma aplicação frontend que simula um chat interativo com um as
 - **[TypeScript](https://www.typescriptlang.org/)**: Adiciona tipagem estática ao JavaScript para maior confiabilidade no código.
 - **[TailwindCSS](https://tailwindcss.com/)**: Framework CSS utilitário para estilização rápida e responsiva.
 - **[shadcn UI](https://shadcn.dev/)**: Biblioteca de componentes de interface elegantes e acessíveis.
-- **[Sonner](https://sonner.dev/)**: Biblioteca para exibição de notificações dinâmicas e estilizadas.
+- **[Framer Motion](https://www.framer.com/motion/)**: Biblioteca para criar animações fluidas e interações dinâmicas.
 
 ---
 
 ## 📝 Funcionalidades
 
 1. **Chat com Assistente Virtual**:
+
    - Envio de mensagens pelo usuário com resposta automática do assistente.
    - Integração com modelos de IA ou uso de respostas fixadas/aleatórias.
    - Respostas podem ser geradas via array predefinido ou por modelos de IA.
 
 2. **Seleção de respostas**:
+
    - **Modo IA ativado**: O usuário pode escolher entre os modelos disponíveis.
      - Modelos suportados:
        - **Groq API**:
@@ -39,10 +41,12 @@ Este projeto é uma aplicação frontend que simula um chat interativo com um as
    - **Modo IA desativado**: O assistente responde utilizando frases predefinidas em um array local.
 
 3. **Histórico de Conversas**:
+
    - Armazenamento local (localStorage) das conversas para persistência após o refresh da página.
    - Possibilidade de renomear os chats para melhor organização.
 
 4. **Gestão de Conversas**:
+
    - Criação de novos chats.
    - Exclusão de chats existentes.
    - Renomeação de chats diretamente pela interface.
@@ -83,10 +87,11 @@ Este projeto é uma aplicação frontend que simula um chat interativo com um as
    ```
 
 5. Instale o **Ollama** (opcional para o modelo local):
-   
+
    - Siga as instruções no [site oficial do Ollama](https://ollama.ai) para configurar o modelo `deepseek-r1:8b`.
 
 6. Execute o servidor de desenvolvimento:
+
    ```bash
    npm run dev
    ```
@@ -98,8 +103,6 @@ Este projeto é uma aplicação frontend que simula um chat interativo com um as
 ## 🌐 Link Hospedado
 
 Acesse a versão online do projeto: [https://chat-interativo-tech4humans.vercel.app/](https://chat-interativo-tech4humans.vercel.app/).
-
- 
 
 ## 🌟 Estrutura do Projeto
 
