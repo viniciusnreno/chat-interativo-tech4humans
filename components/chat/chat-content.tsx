@@ -6,6 +6,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { getUserName } from "@/utils/userService";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ChatContentProps } from "@/types/chat";
+import TypingEffect from "@/components/ui/typing-effect";
+import Loading from "../ui/loading";
 
 const ChatContent: React.FC<ChatContentProps> = ({ messages, loading }) => {
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -50,7 +52,12 @@ const ChatContent: React.FC<ChatContentProps> = ({ messages, loading }) => {
               }`}
             >
               <CardContent className="px-3 py-2">
-                <div>{message.content}</div>
+                {isUserMessage ? (
+                  <div>{message.content}</div>
+                ) : (
+                  <TypingEffect text={message.content} />
+                )}
+
                 <div className="mt-1 text-right text-xs text-gray-500">
                   {time}
                 </div>
@@ -68,7 +75,7 @@ const ChatContent: React.FC<ChatContentProps> = ({ messages, loading }) => {
         <div className="flex items-center justify-start">
           <Card className="my-1 max-w-max bg-white text-gray-800">
             <CardContent className="px-3 py-2">
-              <div>Pensando...</div>
+              <Loading />
             </CardContent>
           </Card>
         </div>

@@ -42,7 +42,7 @@ export const useMessages = (
       };
       const timeout = async () => {
         console.log(loading);
-        await new Promise((resolve) => setTimeout(resolve, 800));
+        await new Promise((resolve) => setTimeout(resolve, 2200));
         setLoading(false);
       };
       await timeout();
