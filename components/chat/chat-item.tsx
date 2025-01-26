@@ -8,15 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Ellipsis, Pencil, Trash } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-
-interface ChatItemProps {
-  chatName: string;
-  chatId: string;
-  isSelected: boolean;
-  onSelect: (chatId: string) => void;
-  onEdit: (chatId: string) => void;
-  onRemove: (chatId: string) => void;
-}
+import { ChatItemProps } from "@/types/chat";
 
 const ChatItem: React.FC<ChatItemProps> = ({
   chatId,

@@ -4,10 +4,7 @@ import React, { useState } from "react";
 import ChatContent from "@/components/chat/chat-content";
 import ChatForm from "@/components/chat/chat-form";
 import { useMessages } from "@/hooks/useMessages";
-
-interface ChatAreaProps {
-  chatId: string;
-}
+import { ChatAreaProps } from "@/types/chat";
 
 const ChatArea: React.FC<ChatAreaProps> = ({ chatId }) => {
   const [model, setModel] = useState({
@@ -18,7 +15,7 @@ const ChatArea: React.FC<ChatAreaProps> = ({ chatId }) => {
 
   return (
     <div className="flex h-screen flex-1 flex-col bg-gray-100">
-      <ChatContent messages={messages} />
+      <ChatContent messages={messages} loading={loading} />
       <ChatForm
         addMessage={addMessage}
         model={model}

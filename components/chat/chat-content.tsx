@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { Message } from "@/types/chat";
+import React, { useEffect, useRef, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { getUserName } from "@/utils/userService";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { ChatContentProps } from "@/types/chat";
 
-const ChatContent = ({ messages }: { messages: Message[] }) => {
+const ChatContent: React.FC<ChatContentProps> = ({ messages, loading }) => {
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
 
@@ -20,7 +20,7 @@ const ChatContent = ({ messages }: { messages: Message[] }) => {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [messages]);
+  }, [messages, loading]);
 
   const userInitial = userName ? userName.charAt(0).toUpperCase() : "?";
 
@@ -64,6 +64,15 @@ const ChatContent = ({ messages }: { messages: Message[] }) => {
           </div>
         );
       })}
+      {loading && (
+        <div className="flex items-center justify-start">
+          <Card className="my-1 max-w-max bg-white text-gray-800">
+            <CardContent className="px-3 py-2">
+              <div>Pensando...</div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
       <div ref={scrollRef}></div>
     </ScrollArea>
   );

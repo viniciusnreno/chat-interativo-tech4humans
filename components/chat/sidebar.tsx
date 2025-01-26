@@ -5,11 +5,8 @@ import ChatItem from "@/components/chat/chat-item";
 import EditChatDialog from "@/components/chat/edit-dialog";
 import { useChatContext } from "@/contexts/chat-context";
 import { Menu } from "lucide-react";
+import { SidebarProps } from "@/types/chat";
 
-interface SidebarProps {
-  activeChatId: string | null;
-  setActiveChatId: (chatId: string | null) => void;
-}
 const Sidebar: React.FC<SidebarProps> = ({ activeChatId, setActiveChatId }) => {
   const { chats, createNewChat, handleRemoveChat, handleUpdateChat } =
     useChatContext();

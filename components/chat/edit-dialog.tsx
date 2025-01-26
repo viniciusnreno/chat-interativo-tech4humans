@@ -9,12 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
-interface EditChatDialogProps {
-  chatId: string;
-  onClose: () => void;
-  onSave: (oldChatId: string, newChatId: string) => void;
-}
+import { EditChatDialogProps } from "@/types/chat";
 
 const EditChatDialog: React.FC<EditChatDialogProps> = ({
   chatId,

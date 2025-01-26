@@ -10,10 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
-interface UserNameDialogProps {
-  onSave: (userName: string) => void;
-}
+import { UserNameDialogProps } from "@/types/chat";
 
 const UserNameDialog: React.FC<UserNameDialogProps> = ({ onSave }) => {
   const [userName, setUserName] = useState("");

@@ -10,21 +10,17 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { Message } from "@/types/chat";
+import { ChatFormProps, Message } from "@/types/chat";
 
-const ChatForm = ({
+const ChatForm: React.FC<ChatFormProps> = ({
   addMessage,
   model,
   setModel,
   loading,
-}: {
-  addMessage: (message: Message) => void;
-  model: { active: boolean; name: string };
-  setModel: (value: { active: boolean; name: string }) => void;
-  loading: boolean;
 }) => {
   const models = [
     "gpt-3.5-turbo-instruct",
+    "deepseek-r1:8b (local)",
     "llama-3.3-70b-versatile",
     "llama-3.1-8b-instant",
     "llama3-70b-8192",

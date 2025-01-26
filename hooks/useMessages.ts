@@ -40,7 +40,12 @@ export const useMessages = (
         content: res.data.response,
         timestamp: Date.now().toString(),
       };
-
+      const timeout = async () => {
+        console.log(loading);
+        await new Promise((resolve) => setTimeout(resolve, 800));
+        setLoading(false);
+      };
+      await timeout();
       setMessage(chatId, botMessage);
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
@@ -49,8 +54,6 @@ export const useMessages = (
       );
 
       console.error("Erro na integração com o modelo: ", model.name, error);
-    } finally {
-      setLoading(false);
     }
   };
 
