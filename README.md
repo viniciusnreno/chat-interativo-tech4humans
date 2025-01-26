@@ -98,6 +98,8 @@ Este projeto é uma aplicação que simula um chat interativo com um assistente 
 
 Acesse a versão online do projeto: [https://chat-interativo-tech4humans.vercel.app/](https://chat-interativo-tech4humans.vercel.app/).
 
+---
+
 ## 🌟 Estrutura do Projeto
 
 - app/api/chat/[model]/route.ts: Endpoint responsável por processar mensagens via modelo de IA.
