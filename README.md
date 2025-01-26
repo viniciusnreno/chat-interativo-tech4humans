@@ -23,7 +23,7 @@ Este projeto é uma aplicação frontend que simula um chat interativo com um as
    - Integração com modelos de IA ou uso de respostas fixadas/aleatórias.
    - Respostas podem ser geradas via array predefinido ou por modelos de IA.
 
-2. **Switch de IA**:
+2. **Seleção de respostas**:
    - **Modo IA ativado**: O usuário pode escolher entre os modelos disponíveis.
      - Modelos suportados:
        - **Groq API**:
