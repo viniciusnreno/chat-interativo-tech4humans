@@ -36,8 +36,8 @@ Este projeto é uma aplicação que simula um chat interativo com um assistente 
          - gemma2-9b-it
        - **OpenAI API**:
          - gpt-3.5-turbo-instruct
-       - **[Ollama](#ollama---modelos-de-ia-locais) 💻**:
-         - deepseek-r1:8b
+       - **Ollama (Local)**:
+         - deepseek-r1:8b [veja como instalar)](#ollama---modelos-de-ia-locais) 💻
    
    - **Modo IA desativado**: O assistente responde utilizando frases predefinidas em um array local.
 
