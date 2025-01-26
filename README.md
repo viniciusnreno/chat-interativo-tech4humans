@@ -132,7 +132,7 @@ O padrão BFF foi implementado através do App Router do Next.js:
 3. Após a instalação, baixe o modelo **deepseek-r1:8b** com o seguinte comando:
    
    ```bash
-   ollama pull deepseek-r1:8b
+   ollama run deepseek-r1:8b
    ```
    
 4. Certifique-se de que o serviço do Ollama está rodando corretamente. Para verificar o status, utilize o comando:
