@@ -74,14 +74,16 @@ Este projeto é uma aplicação frontend que simula um chat interativo com um as
    ```
 
 4. Configure as variáveis de ambiente:
-   Crie um arquivo `.env` na raiz do projeto e adicione as chaves de API necessárias:
+
+   - Crie um arquivo `.env` na raiz do projeto e adicione as chaves de API necessárias:
    ```bash
    OPENAI_API_KEY=sua_openai_api_key
    GROQ_API_KEY=sua_groq_api_key
    ```
 
 5. Instale o **Ollama** (opcional para o modelo local):
-   Siga as instruções no [site oficial do Ollama](https://ollama.ai) para configurar o modelo `deepseek-r1:8b`.
+   
+   - Siga as instruções no [site oficial do Ollama](https://ollama.ai) para configurar o modelo `deepseek-r1:8b`.
 
 6. Execute o servidor de desenvolvimento:
    ```bash
