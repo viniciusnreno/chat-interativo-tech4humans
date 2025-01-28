@@ -25,7 +25,7 @@ export async function POST(req: Request) {
       case "gpt-3.5-turbo-instruct":
         response = await handleGPTRequest(username, history, message, model);
         break;
-      case "deepseek-r1:8b":
+      case "deepseek-r1:8b (local)":
         response = await handleDeepSeekRequest(username, history, message);
         break;
       default:
